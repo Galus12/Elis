@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Love Letter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #ffebee;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 300px;
+            height: 220px;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        /* Amplop */
+        .pocket {
+            position: absolute;
+            border-left: 140px solid #f5a3a2;
+            border-right: 140px solid #f5a3a2;
+            border-top: 90px solid transparent;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+            height: 0;
+            width: 80px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            transition: all 0.5s ease;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+
+        /* Surat */
+        .letter {
+            position: absolute;
+            background-color: #fff;
+            width: 90%;
+            height: 90%;
+            left: 5%;
+            bottom: 5%;
+            border-radius: 6px;
+            font-family: "Dancing Script", cursive;
+            padding: 15px;
+            box-sizing: border-box;
+            overflow: hidden;
+            transform: translateY(0);
+            transition: all 0.8s ease;
+            z-index: 1;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        /* Ketika dibuka */
+        .open .pocket {
+            transform: translateX(-50%) translateY(-10px);
+            opacity: 0.8;
+        }
+
+        .open .letter {
+            transform: translateY(-100px);
+        }
+
+        /* Isi surat */
+        .letter-content {
+            width: 100%;
+        }
+
+        h1 {
+            margin: 0 0 5px 0;
+            color: #d32f2f;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        p {
+            margin: 5px 0;
+            font-size: 16px;
+            line-height: 1.4;
+            color: #333;
+        }
+
+        /* Tombol */
+        .btn-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background-color: #f5a3a2;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #f18c8b;
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Animasi love besar */
+        .big-love {
+            position: absolute;
+            font-size: 60px; /* Ukuran lebih besar */
+            color: #ff4081;
+            animation: float-up 2s ease-out forwards;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(0.5);
+            bottom: 100px;
+            left: 50%;
+            margin-left: -30px;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: scale(0.5) translateY(0);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+                transform: scale(1.2) translateY(-20px);
+            }
+            100% {
+                transform: scale(1) translateY(-150px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="envelope">
+        <div class="pocket"></div>
+        <div class="letter">
+            <div class="letter-content">
+                <h1>To: Elis</h1>
+                <p>Undangan bermain Billiard</p>
+                <p>Kamis, 24 April 2025</p>
+                <p>Note: Jangan koyakkan karpet mejanya.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-container">
+        <button class="btn" id="openBtn">OPEN</button>
+        <button class="btn" id="closeBtn">CLOSE</button>
+    </div>
+
+    <script>
+        const openBtn = document.getElementById('openBtn');
+        const closeBtn = document.getElementById('closeBtn');
+        const envelope = document.getElementById('envelope');
+        const letter = document.querySelector('.letter');
+        
+        // Buka amplop dengan animasi love besar
+        openBtn.addEventListener('click', function() {
+            if (!envelope.classList.contains('open')) {
+                envelope.classList.add('open');
+                showBigLove();
+            }
+        });
+        
+        // Tutup amplop
+        closeBtn.addEventListener('click', function() {
+            envelope.classList.remove('open');
+        });
+        
+        // Klik surat untuk menutup
+        letter.addEventListener('click', function() {
+            if (envelope.classList.contains('open')) {
+                envelope.classList.remove('open');
+            }
+        });
+        
+        // Fungsi menampilkan love besar
+        function showBigLove() {
+            const love = document.createElement('div');
+            love.classList.add('big-love');
+            love.innerHTML = '❤️';
+            
+            // Tambahkan ke container amplop
+            envelope.appendChild(love);
+            
+            // Hapus setelah animasi selesai
+            setTimeout(() => {
+                love.remove();
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
